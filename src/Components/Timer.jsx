@@ -6,9 +6,9 @@ import {useState,useRef} from "react";
 import Result from "./Result";
 function Timer({exercise,time,number}){
     const dialog=useRef();
-    const [remainingTime,setRemainingTime]=useState(time*1000);
+    const [remainingTime,setRemainingTime]=useState(time*60*1000);
     let timer=useRef();
-    const timerActive = remainingTime<time*1000 && remainingTime>0
+    const timerActive = remainingTime<time*60*1000 && remainingTime>0
     if(remainingTime<=0){
         clearInterval(timer.current);
         dialog.current.showModal();
@@ -23,7 +23,7 @@ function Timer({exercise,time,number}){
         dialog.current.showModal();
     }
     function handleReset(){
-        setRemainingTime(time*1000)
+        setRemainingTime(time*60*1000)
     }
     function handleWin(){
         setRemainingTime(0);
@@ -34,7 +34,7 @@ function Timer({exercise,time,number}){
         <div id="timer">
             <h4>{exercise}</h4>
             <p id="para">Time:{time} mins <br></br>Number:{number}</p>
-            <progress value={remainingTime} max={time*1000}></progress>
+            <progress value={remainingTime} max={time*60*1000}></progress>
             <button disabled={remainingTime<=0} id="start" onClick={!timerActive? handleStart : handleStop}>{!timerActive ? "Start" : "Stop"}</button><br></br>
             {timerActive ? "timer running...." : "timer inactive"}
         </div>
